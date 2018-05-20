@@ -84,7 +84,7 @@ class TransactionEmit implements TransactionInterface
     public function setAmount(int $amount): void
     {
         if ($amount < 0) {
-            throw new \LogicException("Amount value should be greater than nothing");
+            throw new \LogicException("Amount value should be positive");
         }
         $this->amount = $amount;
     }
