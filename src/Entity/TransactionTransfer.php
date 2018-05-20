@@ -2,9 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Contracts\Transaction\TransferInterface;
-
-class TransactionTransfer extends TransactionEmit implements TransferInterface
+class TransactionTransfer extends TransactionEmit
 {
     /**
      * @var Account
@@ -61,10 +59,9 @@ class TransactionTransfer extends TransactionEmit implements TransferInterface
     }
 
     /**
-     * @param Account $account
-     * @return int
+     * @inheritdoc
      */
-    public function countAccountBalance(Account $account): void
+    public function countBalance(Account $account): void
     {
         if ($this->getSender()->getName() == $account->getName()) {
             $balance = $account->getBalance();
@@ -72,11 +69,11 @@ class TransactionTransfer extends TransactionEmit implements TransferInterface
             $account->setBalance($balance);
         }
 
-        parent::countAccountBalance($account);
+        parent::countBalance($account);
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getDetachedAccounts(): array
     {

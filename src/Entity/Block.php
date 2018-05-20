@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Contracts\Transaction\EmissionInterface;
+use App\Entity\Contracts\TransactionInterface;
 
 class Block
 {
@@ -14,7 +14,7 @@ class Block
     private $id;
 
     /**
-     * @var EmissionInterface[]
+     * @var TransactionInterface[]
      */
     private $transactions = [];
 
@@ -45,7 +45,7 @@ class Block
     }
 
     /**
-     * @return EmissionInterface[]
+     * @return TransactionInterface[]
      */
     public function getTransactions(): array
     {
@@ -53,9 +53,9 @@ class Block
     }
 
     /**
-     * @param EmissionInterface $transaction
+     * @param TransactionInterface $transaction
      */
-    public function addTransaction(EmissionInterface $transaction)
+    public function addTransaction(TransactionInterface $transaction)
     {
         if ($this->validateTransaction($transaction)) {
             $this->transactions[$transaction->getId()] = $transaction;
@@ -63,10 +63,10 @@ class Block
     }
 
     /**
-     * @param EmissionInterface $transaction
+     * @param TransactionInterface $transaction
      * @return bool
      */
-    private function validateTransaction(EmissionInterface $transaction): bool
+    private function validateTransaction(TransactionInterface $transaction): bool
     {
         if (count($this->transactions) > self::TRANSACTIONS_LIMIT) {
             return false;

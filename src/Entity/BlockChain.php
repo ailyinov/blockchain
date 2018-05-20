@@ -83,14 +83,13 @@ class BlockChain
         /** @var Block $block */
         foreach (array_reverse($chain) as $block) {
             foreach ($block->getTransactions() as $transaction) {
-                /** @var Account $account */
                 foreach ($transaction->getDetachedAccounts() as $account) {
                     if (!isset($accounts[$account->getName()])) {
                         $accounts[$account->getName()] = $account;
                     } else {
                         $account = $accounts[$account->getName()];
                     }
-                    $transaction->countAccountBalance($account);
+                    $transaction->countBalance($account);
                     if ($account->getBalance() < 0) {
                         return false;
                     }
@@ -110,7 +109,7 @@ class BlockChain
         $blockChain = $this->getBlockChain();
         foreach ($blockChain as $block) {
             foreach ($block->getTransactions() as $transaction) {
-                $transaction->countAccountBalance($account);
+                $transaction->countBalance($account);
             }
         }
 

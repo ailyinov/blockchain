@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 
-use App\Entity\Contracts\Transaction\EmissionInterface;
+use App\Entity\Contracts\TransactionInterface;
 
-class TransactionEmit implements EmissionInterface
+class TransactionEmit implements TransactionInterface
 {
     /**
      * @var int
@@ -36,7 +36,7 @@ class TransactionEmit implements EmissionInterface
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getId(): int
     {
@@ -53,7 +53,7 @@ class TransactionEmit implements EmissionInterface
     }
 
     /**
-     * @return Account
+     * @inheritdoc
      */
     public function getAcceptor(): Account
     {
@@ -108,11 +108,9 @@ class TransactionEmit implements EmissionInterface
     }
 
     /**
-     * @param int $balance
-     * @param Account $account
-     * @return int
+     * @inheritdoc
      */
-    public function countAccountBalance(Account $account): void
+    public function countBalance(Account $account): void
     {
         if ($this->getAcceptor()->getName() == $account->getName()) {
             $balance = $account->getBalance();
@@ -122,7 +120,7 @@ class TransactionEmit implements EmissionInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getDetachedAccounts(): array
     {
