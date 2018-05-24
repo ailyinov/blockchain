@@ -11,11 +11,6 @@ class Account
     private $name;
 
     /**
-     * @var int
-     */
-    private $balance = 0;
-
-    /**
      * User constructor.
      * @param string $name
      */
@@ -43,22 +38,5 @@ class Account
             throw new \LogicException('Account name should be longest than 2 and shorted than 10 characters');
         }
         $this->name = $name;
-    }
-
-    /**
-     * @return int
-     */
-    public function getBalance(): int
-    {
-        return $this->balance;
-    }
-
-    /**
-     * @param int $balance
-     * @return $this
-     */
-    public function setBalance(int $balance): void
-    {
-        $this->balance = $balance;
     }
 }

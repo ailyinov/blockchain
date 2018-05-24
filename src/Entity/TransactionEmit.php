@@ -110,21 +110,21 @@ class TransactionEmit implements TransactionInterface
     /**
      * @inheritdoc
      */
-    public function countBalance(Account $account): void
+    public function countBalance(Account $account, int $balance): int
     {
         if ($this->getAcceptor()->getName() == $account->getName()) {
-            $balance = $account->getBalance();
             $balance += $this->getAmount();
-            $account->setBalance($balance);
         }
+
+        return $balance;
     }
 
     /**
      * @inheritdoc
      */
-    public function getDetachedAccounts(): array
+    public function getAccounts(): array
     {
-        $account = clone $this->getAcceptor();
+        $account = $this->getAcceptor();
 
         return [$account];
     }

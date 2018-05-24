@@ -61,24 +61,22 @@ class TransactionTransfer extends TransactionEmit
     /**
      * @inheritdoc
      */
-    public function countBalance(Account $account): void
+    public function countBalance(Account $account, int $balance): int
     {
         if ($this->getSender()->getName() == $account->getName()) {
-            $balance = $account->getBalance();
             $balance -= $this->getAmount();
-            $account->setBalance($balance);
         }
 
-        parent::countBalance($account);
+        return parent::countBalance($account, $balance);
     }
 
     /**
      * @inheritdoc
      */
-    public function getDetachedAccounts(): array
+    public function getAccounts(): array
     {
-        $account = clone $this->getSender();
+        $account = $this->getSender();
 
-        return array_merge(parent::getDetachedAccounts(), [$account]);
+        return array_merge([$account], parent::getAccounts());
     }
 }

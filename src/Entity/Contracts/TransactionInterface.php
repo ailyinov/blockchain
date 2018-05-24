@@ -13,19 +13,13 @@ interface TransactionInterface
     public function getId(): int;
 
     /**
-     * @return Account
-     */
-    public function getAcceptor(): Account;
-
-    /**
      * @param Account $account
+     * @return int
      */
-    public function countBalance(Account $account): void;
+    public function countBalance(Account $account, int $balance): int;
 
     /**
-     * Return cloned accounts in order to perform dry operations without effects on real ones
-     *
      * @return Account[]
      */
-    public function getDetachedAccounts(): array;
+    public function getAccounts(): array;
 }

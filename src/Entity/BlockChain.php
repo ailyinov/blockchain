@@ -79,19 +79,22 @@ class BlockChain
         }
         array_unshift($chain, $block);
 
-        $accounts = [];
+        $balances = [];
         /** @var Block $block */
         foreach (array_reverse($chain) as $block) {
             foreach ($block->getTransactions() as $transaction) {
-                foreach ($transaction->getDetachedAccounts() as $account) {
-                    if (!isset($accounts[$account->getName()])) {
-                        $accounts[$account->getName()] = $account;
+                foreach ($transaction->getAccounts() as $account) {
+                    if (!isset($balances[$account->getName()])) {
+                        $balance = 0;
+                        $balances[$account->getName()] = $balance;
                     } else {
-                        $account = $accounts[$account->getName()];
+                        $balance = $balances[$account->getName()];
                     }
-                    $transaction->countBalance($account);
-                    if ($account->getBalance() < 0) {
+                    $balance = $transaction->countBalance($account, $balance);
+                    if ($balance < 0) {
                         return false;
+                    } else  {
+                        $balances[$account->getName()] = $balance;
                     }
                 }
             }
@@ -106,14 +109,15 @@ class BlockChain
      */
     public function getBalance(Account $account): int
     {
+        $balance = 0;
         $blockChain = $this->getBlockChain();
         foreach ($blockChain as $block) {
             foreach ($block->getTransactions() as $transaction) {
-                $transaction->countBalance($account);
+                $balance = $transaction->countBalance($account, $balance);
             }
         }
 
-        return $account->getBalance();
+        return $balance;
     }
 
     /**
