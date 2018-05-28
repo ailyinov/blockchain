@@ -44,7 +44,7 @@ class BlockChain
         }
 
         if (null === $parentBlockId) {
-            if (!empty($this->blockTree)) {
+            if (!empty($this->blockTree) && !$this->allTransactionsHasEnoughCoins($block)) {
                 return;
             }
             $this->createRoot($block);
@@ -70,7 +70,7 @@ class BlockChain
      * @param array $parentNode
      * @return bool
      */
-    private function allTransactionsHasEnoughCoins(Block $block, array $parentNode): bool
+    private function allTransactionsHasEnoughCoins(Block $block, array $parentNode = []): bool
     {
         $chain = [];
         while (isset($parentNode['parent'])) {
