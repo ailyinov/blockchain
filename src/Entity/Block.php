@@ -68,13 +68,6 @@ class Block
      */
     private function validateTransaction(TransactionInterface $transaction): bool
     {
-        if (count($this->transactions) > self::TRANSACTIONS_LIMIT) {
-            return false;
-        }
-        if (isset($this->transactions[$transaction->getId()])) {
-            return false;
-        }
-
-        return true;
+        return count($this->transactions) < self::TRANSACTIONS_LIMIT && !isset($this->transactions[$transaction->getId()]);
     }
 }
