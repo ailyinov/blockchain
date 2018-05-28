@@ -44,7 +44,7 @@ class BlockChain
         }
 
         if (null === $parentBlockId) {
-            if (!empty($this->blockTree) && !$this->allTransactionsHasEnoughCoins($block)) {
+            if (!empty($this->blockTree) || !$this->allTransactionsHasEnoughCoins($block)) {
                 return;
             }
             $this->createRoot($block);
